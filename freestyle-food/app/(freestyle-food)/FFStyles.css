@@ -1,0 +1,31 @@
+
+
+@media (min-width: 768px) {
+    .ff-main-content {
+        padding-top: 120px !important;
+        
+    }
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        background-color: coral;
+        
+        
+    }
+    .nav-pills a:hover {
+        color:rgb(90, 18, 18);
+    }
+    .navi-link {
+        color: brown;
+    }
+    .burger-guy.nav-link a:hover, .burger-guy.nav-link a:focus, .burger-guy.nav-link.active {
+        background-color: transparent;
+        
+        
+    }
+    .category-button {
+        background-color: chocolate;
+        margin: 10px;
+    }
+    .category-button:hover {
+        background-color: rgb(183, 77, 11);
+    }
+}
