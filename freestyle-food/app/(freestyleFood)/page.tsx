@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import RecipeMaker from "./recipes/RecipeMaker";
 import { Button } from "react-bootstrap";
