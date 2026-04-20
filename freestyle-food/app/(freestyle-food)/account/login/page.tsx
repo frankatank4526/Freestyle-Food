@@ -7,7 +7,7 @@ import { redirect, useRouter } from "next/navigation";
 import * as client from "../client"
 import Link from "next/link";
 import { FormControl, Button } from "react-bootstrap";
-import "../../ff-styles.css";
+import "../../FFStyles.css";
 export default function Login() {
     const [credentials, setCredentials] = useState<any>({});
     const router = useRouter();
