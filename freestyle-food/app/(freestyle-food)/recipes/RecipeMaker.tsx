@@ -110,7 +110,7 @@ export default function RecipeMaker({showCategories, setShowCategories}: {showCa
         const mealPages = [];
         for (let i = 0; i < allMeals.length; i += 25) {
             if (i + 25 >= allMeals.length) {
-                mealPages.push(allMeals.slice(i, allMeals.length - 1));
+                mealPages.push(allMeals.slice(i));
                 break;
             }
             mealPages.push(allMeals.slice(i, i + 25));
