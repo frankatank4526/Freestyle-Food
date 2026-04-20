@@ -3,17 +3,24 @@
 import { ReactNode } from "react";
 import FFNavigation from "./navigation";
 import "./FFStyles.css";
-export default function FFLayout({children}: Readonly<{ children: ReactNode}>) {
+import Session from "./account/Session";
+import { Provider } from "react-redux";
+import store from "./store";
+export default function FFLayout({ children }: Readonly<{ children: ReactNode }>) {
 
     return (
-        <div id="FF-layout">
-            <div className="d-flex">
-                <div className="mb-auto" >
-                    <FFNavigation/></div> 
-                    <div className="ff-main-content flex-fill">
-                        {children}</div>
-            </div>
+        <Provider store={store}>
+            <Session>
+                <div id="FF-layout">
+                    <div className="d-flex">
+                        <div className="m-2" >
+                            <FFNavigation /></div>
+                        <div className="ff-main-content flex-fill">
+                            {children}</div>
+                    </div>
 
-        </div>
+                </div>
+            </Session>
+        </Provider>
     )
 }

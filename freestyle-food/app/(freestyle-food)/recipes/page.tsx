@@ -8,7 +8,7 @@ export default function RecipeHome() {
     return(
         <div id="recipe-home" className="d-flex">
             
-            <RecipeMaker/>
+           <h1> tbd</h1>
 
         </div>
 

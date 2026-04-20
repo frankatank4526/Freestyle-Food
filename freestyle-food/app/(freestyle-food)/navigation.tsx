@@ -4,18 +4,22 @@ import { FaHome } from "react-icons/fa";
 import { GiCook } from "react-icons/gi";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { RiAccountCircleFill } from "react-icons/ri";
+import { RiLoginBoxLine } from "react-icons/ri";
+import { RootState } from "./store";
 import { FaRandom } from "react-icons/fa";
 import { ListGroup, ListGroupItem, Nav, NavLink } from "react-bootstrap";
 import Link from "next/link";
 import "./FFStyles.css";
+import { useSelector } from "react-redux";
 export default function FFNavigation() {
+     const { currentUser } = useSelector((state: RootState) => state.accountReducer);
     const pathname = usePathname();
     const links = [
         { label: "Home", path: "/", icon: FaHome },
         { label: "Recipes", path: "/recipes", icon: GiCook },
         { label: "Explore", path: "/explore", icon: HiMagnifyingGlass },
         { label: "Random Recipe", path: "/recipes/random", icon: FaRandom },
-        { label: "Account", path: "/account", icon: RiAccountCircleFill }
+        
 
     ];
     const checkActive = (currentLabel : string) => {
@@ -30,6 +34,8 @@ export default function FFNavigation() {
                 pathname === "/recipes/random";
             case "Account":
                 pathname.startsWith("/account");
+            case "Login/Register":
+                pathname.startsWith("/account/login") || pathname.startsWith("/account/register");
             default:
                 return false;
         }
@@ -37,20 +43,35 @@ export default function FFNavigation() {
     return (
         <div >
             <Nav className="position-fixed nav-pills rounded-0 start-0 end-0 top-0 d-none 
-            d-md-flex bg-orange z-2 flex-row align-items-center" style={{ height: 80 }}>
+            d-md-flex bg-nav z-2 flex-row align-items-center" style={{ height: 80 }}>
                 <NavLink as={Link} href="/" className="burger-guy text-center px-3">
                     <img src="/images/freestyle-burger-guy.png" width="120px" height="auto" />
                 </NavLink>
-                {links.map((link) => (
+                {links.map((link) => ( 
                     <NavLink key={link.path} as={Link} href={link.path}  
                     className={`${checkActive(link.label) ? "active" : ""} navi-link px-3 d-flex flex-row align-items-center justify-content-center`} >
                         {link.icon({fontSize: 35})}
                         {link.label}
 
-                    </NavLink>
+                    </NavLink> 
+                   
                 )
                     
                 )}
+                { currentUser === null ? 
+                     <NavLink key={"/account/login"} as={Link} href={"/account/login"}  
+                    className={`${checkActive("Login/Register") ? "active" : ""} navi-link px-3 d-flex flex-row align-items-center justify-content-center`} >
+                        <RiLoginBoxLine style={{fontSize:35}}/>
+                        {"Login/Register"}
+
+                    </NavLink> :
+                    <NavLink key={"/account/profile"} as={Link} href={"/account/profile"}  
+                    className={`${checkActive("Account") ? "active" : ""} navi-link px-3 d-flex flex-row align-items-center justify-content-center`} >
+                        <RiAccountCircleFill style={{fontSize:35}}/>
+                        {"Account"}
+
+                    </NavLink> 
+                }
 
 
             </Nav>

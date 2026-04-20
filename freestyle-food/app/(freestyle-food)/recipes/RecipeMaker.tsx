@@ -1,9 +1,10 @@
 "use client"
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button, Card, CardBody, CardImg, CardText, CardTitle } from "react-bootstrap";
-import * as client from "./client"
+import { Button, Card, CardBody, CardImg, CardText, CardTitle, Col, Row } from "react-bootstrap";
+
 
 
 export type CategoryValue = {
@@ -69,9 +70,9 @@ export type Recipe = {
 export type Meals = {
     meals: Recipe[];
 }
-export default function RecipeMaker() {
+export default function RecipeMaker({showCategories, setShowCategories}: {showCategories: boolean, setShowCategories: (show: boolean) => void}) {
     const [categories, setCategories] = useState([] as any[]);
-    const [showCategories, setShowCategories] = useState(true);
+    const router = useRouter();
     const [currentCategory, setCurrentCategory] = useState("");
     const [meals, setMeals] = useState([] as any);
     const [pageIndex, setIndex] = useState(0);
@@ -119,11 +120,11 @@ export default function RecipeMaker() {
     }
     const recipeCard = (recipe: Recipe) => {
         return (
-            <Card key={`card-${recipe.idMeal}`}>
-                <CardImg key={`cardImg-${recipe.idMeal}`} variant="top" src={`${recipe.strMealThumb}/small`} />
+            <Card className="m-2" key={`card-${recipe.idMeal}`}>
+                <CardImg width="50%" height="auto" key={`cardImg-${recipe.idMeal}`} variant="top" src={`${recipe.strMealThumb}/medium`} />
                 <CardBody>
                     <CardTitle key={`cardTitle-${recipe.idMeal}`}>{recipe.strMeal} </CardTitle>
-                    <Button variant="info" >
+                    <Button variant="info" onClick={() => router.push(`/recipes/${recipe.idMeal}`)} >
                         More Info
                     </Button>
                 </CardBody>
@@ -151,10 +152,14 @@ export default function RecipeMaker() {
                 </Button>
 
             ))}
-            {!showCategories && mealPages[pageIndex]?.map((meal: Recipe) => (
-                <span> {meal.strMeal}</span>
+            <Row className="m-3">
+                {!showCategories && mealPages[pageIndex]?.map((meal: Recipe) => (
+                <Col key={`col-${meal.idMeal}`} xs={12} md={3}>
+                    {recipeCard(meal)}
+                </Col>
 
             ))}
+            </Row>
 
         </div>
 

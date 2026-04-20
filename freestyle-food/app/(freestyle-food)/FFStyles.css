@@ -28,4 +28,22 @@
     .category-button:hover {
         background-color: rgb(183, 77, 11);
     }
+    .bg-nav {
+        background-color: rgb(249, 241, 73) !important;
+    }
+
+    #ff-username, #ff-password {
+        width: 510px;
+    }
+
+    #ff-signin-btn {
+        width: 250px;
+        margin-right: 5;
+    }
+    #ff-signup-btn {
+        width: 250px;
+        margin-left: 5;
+
+    }
+   
 }
