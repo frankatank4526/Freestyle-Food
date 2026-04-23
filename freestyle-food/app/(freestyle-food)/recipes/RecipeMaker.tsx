@@ -124,7 +124,7 @@ export default function RecipeMaker({showCategories, setShowCategories}: {showCa
                 <CardImg width="50%" height="auto" key={`cardImg-${recipe.idMeal}`} variant="top" src={`${recipe.strMealThumb}/medium`} />
                 <CardBody>
                     <CardTitle key={`cardTitle-${recipe.idMeal}`}>{recipe.strMeal} </CardTitle>
-                    <Button variant="info" onClick={() => router.push(`/recipes/${recipe.idMeal}`)} >
+                    <Button variant="info" onClick={() => router.push(`/details/${recipe.idMeal}`)} >
                         More Info
                     </Button>
                 </CardBody>
@@ -159,7 +159,7 @@ export default function RecipeMaker({showCategories, setShowCategories}: {showCa
                 </Col>
 
             ))}
-            </Row>
+            </Row> {/*add next/prev page logic here*/}
 
         </div>
 

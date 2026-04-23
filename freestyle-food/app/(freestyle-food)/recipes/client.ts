@@ -2,29 +2,28 @@ import axios from "axios";
 
 
 
-const FOOD_API = "http://www.themealdb.com/api/json/v2/65232507"
 
-/* DEPRECATED. VIOLATES CORS. 
-export const findAllCategories = async () => {
-    const response = await axios.get(`${FOOD_API}/categories.php`);
-    return response.data;
+const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
+const axiosWithCredentials = axios.create({ withCredentials: true});
+const RECIPES_API = `${HTTP_SERVER}/api/recipes`
+export const findAllRecipes = async (userId: string) => {
+    const { data } = await axios.get(`${RECIPES_API}/${userId}`);
+    return data;
 }
 
-export const findAllAreas = async () => {
-    const response = await axios.get(`${FOOD_API}/list.php?a=list`);
-    return response.data;
-}
-
-export const findAllIngredients = async () => {
-    const response = await axios.get(`${FOOD_API}/list.php?c=list`);
-    console.log(response.data);
-    return response.data;
+export const createRecipe = async (userId: string, recipe: any) => {
+    const { data } = await axiosWithCredentials.post(`${RECIPES_API}/new/${userId}`, recipe);
+    return data;
 }
 
 export const findRecipeById = async (recipeId: string) => {
-    const response = await axios.get(`${FOOD_API}/lookup.php?i=${recipeId}`)
-    console.log(response.data);
-    return response.data;
+    const { data } = await axios.get(`${RECIPES_API}/user/${recipeId}`);
+    return data; 
 }
-    */
+
+export const findSavedRecipes = async (userId: string) => {
+    const { data } = await axios.get(`${RECIPES_API}/${userId}`);
+    return data; 
+}
+
 

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { FormControl, Button, FormSelect, FormLabel } from "react-bootstrap";
 import * as client from "../client";
+import "../../FFStyles.css";
 
 export default function Signup() {
     const [user, setUser] = useState<any>({});
@@ -25,7 +26,7 @@ export default function Signup() {
             <FormControl id="ff-password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })}
                 className="ff-password mb-2" placeholder="password" type="password" />
 
-            <button onClick={signup} className="wd-signup-btn btn btn-primary mb-2 w-100"> Sign up </button><br />
+            <button onClick={signup} className="btn btn-primary mb-2"> Sign up </button><br />
             <Link href="/account/login" className="ff-signin-link">Sign in</Link>
         </div>
     );
