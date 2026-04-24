@@ -16,17 +16,15 @@ export default function RecipeHome() {
         <div id="recipe-home" className="d-flex">
             {currentUser? 
             <Row>
-                <Col xs={12} md={4}>
+                <Col xs={12} md={6}>
                     <Button variant="success" onClick={() => 
                         router.push(`/recipes/new`)
                     }> Create Recipe</Button>
                 </Col>
-                <Col xs={12} md={4}>
+                <Col xs={12} md={6}>
                     <Button onClick={() => router.push("/recipes/saved")}variant="info"> Saved Recipes</Button>
                 </Col>
-                <Col xs={12} md={4}>
-                    <Button variant="info"> Your Original Recipes</Button>
-                </Col>
+               
                 
 
             </Row>

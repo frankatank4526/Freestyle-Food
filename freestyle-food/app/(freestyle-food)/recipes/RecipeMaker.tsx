@@ -1,5 +1,6 @@
 "use client"
 
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -70,7 +71,22 @@ export type Recipe = {
 export type Meals = {
     meals: Recipe[];
 }
-export default function RecipeMaker({showCategories, setShowCategories}: {showCategories: boolean, setShowCategories: (show: boolean) => void}) {
+ export const recipeCard = (recipe: Recipe, router: AppRouterInstance) => {
+        return (
+            <Card className="m-2" key={`card-${recipe.idMeal}`}>
+                <CardImg width="50%" height="auto" key={`cardImg-${recipe.idMeal}`} variant="top" src={`${recipe.strMealThumb}/medium`} />
+                <CardBody>
+                    <CardTitle key={`cardTitle-${recipe.idMeal}`}>{recipe.strMeal} </CardTitle>
+                    <Button variant="info" onClick={() => router.push(`/details/${recipe.idMeal}`)} >
+                        More Info
+                    </Button>
+                </CardBody>
+
+            </Card>
+
+        );
+    };
+export default function RecipeMaker({ showCategories, setShowCategories }: { showCategories: boolean, setShowCategories: (show: boolean) => void }) {
     const [categories, setCategories] = useState([] as any[]);
     const router = useRouter();
     const [currentCategory, setCurrentCategory] = useState("");
@@ -118,27 +134,13 @@ export default function RecipeMaker({showCategories, setShowCategories}: {showCa
         setMealPages(mealPages);
 
     }
-    const recipeCard = (recipe: Recipe) => {
-        return (
-            <Card className="m-2" key={`card-${recipe.idMeal}`}>
-                <CardImg width="50%" height="auto" key={`cardImg-${recipe.idMeal}`} variant="top" src={`${recipe.strMealThumb}/medium`} />
-                <CardBody>
-                    <CardTitle key={`cardTitle-${recipe.idMeal}`}>{recipe.strMeal} </CardTitle>
-                    <Button variant="info" onClick={() => router.push(`/details/${recipe.idMeal}`)} >
-                        More Info
-                    </Button>
-                </CardBody>
-
-            </Card>
-
-        );
-    };
+   
 
     useEffect(() => {
         findCategories();
     }, []);
     return (
-        <div>
+        <div className="mt-3">
             {showCategories && categories.map((category: CategoryValue) => (
 
                 <Button className="category-button p-3" id={category.idCategory} key={category.idCategory}
@@ -154,12 +156,26 @@ export default function RecipeMaker({showCategories, setShowCategories}: {showCa
             ))}
             <Row className="m-3">
                 {!showCategories && mealPages[pageIndex]?.map((meal: Recipe) => (
-                <Col key={`col-${meal.idMeal}`} xs={12} md={3}>
-                    {recipeCard(meal)}
-                </Col>
+                    <Col key={`col-${meal.idMeal}`} xs={12} md={3}>
+                        {recipeCard(meal, router)}
+                    </Col>
 
-            ))}
+                ))}
             </Row> {/*add next/prev page logic here*/}
+            {!showCategories &&
+                <div>
+                    <Button variant="secondary" onClick={() => {
+                        if (pageIndex > 0) {
+                            setIndex(pageIndex - 1);
+                        }
+                    }} className="m-3">Previous Page</Button>
+                    <Button variant="primary" className="m-3" onClick={() => {
+                        if (pageIndex + 1 < mealPages.length) {
+                            setIndex(pageIndex + 1);
+                        }
+                    }} >Next Page</Button></div>
+            }
+
 
         </div>
 

@@ -15,7 +15,7 @@ export default function FFLayout({ children }: Readonly<{ children: ReactNode }>
                     <div className="d-flex">
                         <div className="m-2" >
                             <FFNavigation /></div>
-                        <div className="ff-main-content flex-fill">
+                        <div className="ff-main-content flex-fill p-3">
                             {children}</div>
                     </div>
 

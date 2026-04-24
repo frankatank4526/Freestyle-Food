@@ -51,8 +51,8 @@ export default function RecipeDetails() {
         <div>
             {recipe == null ? <h1>Recipe not found :&lt;</h1> :
                 <div>
-                    <h1 className="mb-3">{recipe.strMeal} </h1>
-                   {recipe.strMealThumb !== "" && recipe.strMealThumb && <img src={`${recipe.strMealThumb}/large`} /> }
+                    <h1 className="mb-3 ms-4">{recipe.strMeal} </h1>
+                   {recipe.strMealThumb !== "" && recipe.strMealThumb && <img className="ms-4" src={`${recipe.strMealThumb}/large`} /> }
                     <Row className="m-4">
                         {
                             displayAllIngredients().map(({ ingredient, measure }, index) => (

@@ -17,8 +17,8 @@ export default function FFNavigation() {
     const links = [
         { label: "Home", path: "/", icon: FaHome },
         { label: "Recipes", path: "/recipes", icon: GiCook },
-        { label: "Explore", path: "/explore", icon: HiMagnifyingGlass },
-        { label: "Random Recipe", path: "/recipes/random", icon: FaRandom },
+        { label: "Explore", path: "/search", icon: HiMagnifyingGlass },
+       // { label: "Random Recipe", path: "/recipes/random", icon: FaRandom },
         
 
     ];
@@ -29,9 +29,9 @@ export default function FFNavigation() {
             case "Recipes":
                 pathname !== "/recipes/random" && pathname.startsWith("/recipes");
             case "Explore":
-                pathname.startsWith("/explore");
-            case "Random Recipe":
-                pathname === "/recipes/random";
+                pathname.startsWith("/search");
+          //  case "Random Recipe":
+          //      pathname === "/recipes/random";
             case "Account":
                 pathname.startsWith("/account");
             case "Login/Register":
