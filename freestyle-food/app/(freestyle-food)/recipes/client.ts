@@ -26,4 +26,12 @@ export const findSavedRecipes = async (userId: string) => {
     return data; 
 }
 
+export const deleteRecipe = async (userId: string, recipeId: string) => {
+    const { data } = await axios.delete(`${RECIPES_API}/${userId}/${recipeId}`)
+    return data;
+}
 
+export const updateRecipe = async (userId: string, recipeId: string, recipeUpdates: any) => {
+    const { data } = await axios.put(`${RECIPES_API}/${userId}/${recipeId}`, recipeUpdates);
+    return data; 
+}

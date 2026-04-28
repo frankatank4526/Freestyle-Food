@@ -1,6 +1,6 @@
 "use client"
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button, Col, FormControl, FormLabel, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import * as client from "../client"
 import { RootState } from "../../store";
@@ -18,13 +18,27 @@ export default function NewRecipe() {
     const [area, setArea] = useState<string>("");
     const [instructions, setInstructions] = useState<string>("");
     const [youtube, setYoutube] = useState<string>("");
+    const searchParams = useSearchParams();
+    const recipeId = searchParams.get("recipeId") || "";
+    const [recipe, setRecipe] = useState<any>(null);
+
+    const fetchRecipe = async () => {
+        if (recipeId) {
+            const editRecipe = await client.findRecipeById(recipeId);
+            setRecipe(editRecipe);
+        }
+    }
     const router = useRouter();
     const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+
+    useEffect(() => {
+        fetchRecipe();
+    }, [])
     return (
         <Row className="justify-content-center">
 
             <Col xs={12} md={6} >
-                <h2> Create Recipe:</h2>
+                <h2> {recipe? "Edit Recipe:" : "Create Recipe" }</h2>
                 <ListGroup>
 
                     <ListGroupItem>
@@ -75,18 +89,23 @@ export default function NewRecipe() {
                     ))}
                 </ListGroup>
                 <Button variant="primary" className="m-2" onClick={async () => {
-                    let newRecipe = { 
+                    let newRecipe = {
                         ...Object.fromEntries(ingredients.map((v, i) => [`strIngredient${i + 1}`, v])),
                         ...Object.fromEntries(measurements.map((v, i) => [`strMeasure${i + 1}`, v])),
-                        strMeal: name, 
+                        strMeal: name,
                         strArea: area,
                         strInstructions: instructions,
                         strYoutube: youtube,
                         strMealThumb: "",
                     }
-                    await client.createRecipe(currentUser!._id, newRecipe);
+                    if (recipe) {
+                        await client.updateRecipe(currentUser!._id, recipe._id, newRecipe);
+                    }
+                    else {
+                        await client.createRecipe(currentUser!._id, newRecipe);
+                    }
                     router.push("/recipes");
-                }}>Create new recipe!</Button>
+                }}>{recipe? "Save Edits" : "Create New Recipe!"}</Button>
                 <Button variant="danger" className="m-2" onClick={() => router.push("/recipes")}>Cancel</Button>
             </Col>
         </Row>

@@ -12,8 +12,8 @@ export default function RecipeDetails() {
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const findRecipe = async () => {
         const response = await fetch(`/api/recipes/${recipeId}`);
-        const data = await response.json() as Meals;
-        if (data.meals === null) {
+        const data = await response.json(); 
+        if (!data.meals || data.meals === "Invalid ID") {
             const recipe = await client.findRecipeById(recipeId as string);
             setRecipe(recipe);
         } else {
@@ -45,7 +45,7 @@ export default function RecipeDetails() {
     useEffect(() => {
 
         findRecipe();
-    }, []
+    }, [recipeId]
     );
     return (
         <div>
